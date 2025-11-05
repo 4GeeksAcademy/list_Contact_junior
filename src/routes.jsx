@@ -6,9 +6,10 @@ import {
     Route,
 } from "react-router-dom";
 import { Layout } from "./pages/Layout";
-import { Home } from "./pages/Home";
+import { Home, loader as homeLoader, action as homeAction } from "./pages/Home";
 import { Single } from "./pages/Single";
-import { Demo } from "./pages/Demo";
+import { Add, action as addAction, loader as addLoader } from "./pages/Add";
+import Agenda, { loader as agendaLoader } from "./pages/Agenda";
 
 export const router = createBrowserRouter(
     createRoutesFromElements(
@@ -22,9 +23,13 @@ export const router = createBrowserRouter(
       <Route path="/" element={<Layout />} errorElement={<h1>Not found!</h1>} >
 
         {/* Nested Routes: Defines sub-routes within the BaseHome component. */}
-        <Route path= "/" element={<Home />} />
-        <Route path="/single/:theId" element={ <Single />} />  {/* Dynamic route for single items */}
-        <Route path="/demo" element={<Demo />} />
+  <Route path= "/" element={<Home />} loader={homeLoader} action={homeAction} />
+  <Route path="/singleaddcontact/:theId" element={ <Single />} />  {/* Dynamic route for single items */}
+  <Route path="/agenda/:slug" element={<Agenda />} loader={agendaLoader} />
+  <Route path="/agenda/:slug/add" element={<Add />} loader={addLoader} action={addAction} />
+  <Route path="/agenda/:slug/edit/:id" element={<Add />} loader={addLoader} action={addAction} />
+  <Route path="/add" element={<Add />} loader={addLoader} action={addAction} />
+  <Route path="/edit/:id" element={<Add />} loader={addLoader} action={addAction} />
       </Route>
     )
 );
